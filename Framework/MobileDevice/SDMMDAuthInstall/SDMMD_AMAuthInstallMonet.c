@@ -2349,6 +2349,499 @@ function _AMAuthInstallMonetLocalCreateProvisioningTicket {
     return rax;
 }
 
+function _AMAuthInstallMonetLocalHandleRequest {
+    var_24 = rdx;
+    r12 = rsi;
+    r15 = rdi;
+    var_200 = 0x0;
+    var_192 = 0x0;
+    var_184 = 0x0;
+    var_176 = 0x0;
+    var_168 = 0x0;
+    var_160 = 0x0;
+    var_152 = 0x0;
+    var_144 = 0x0;
+    var_136 = 0x0;
+    rax = CFGetAllocator(rdi);
+    rax = CFDictionaryCreateMutable(rax, 0x0, *kCFTypeDictionaryKeyCallBacks, *kCFTypeDictionaryValueCallBacks);
+    var_32 = rax;
+    if (rax != 0x0) {
+    	// loc_46ce3
+		_AMAuthInstallMonetLocalRegisterKeys(r15);
+		
+	    rbx = CFDictionaryGetValue(r12, *_kAMAuthInstallTagBbSnum);
+	    if ((rbx != 0x0) && (CFDataGetTypeID() == CFGetTypeID(rbx))) {
+			// loc_46d22;
+		    rbx = CFDictionaryGetValue(r12, *_kAMAuthInstallTagBbChipId);
+		    if ((rbx != 0x0) && (CFNumberGetTypeID() == CFGetTypeID(rbx))) {
+				// loc_46d59;
+			    rax = CFNumberGetValue(rbx, 0x3, &var_212);
+			    if (LOBYTE(rax) == 0x0) {
+					// loc_46f8b;
+				    _AMAuthInstallLog(0x3, "AMAuthInstallMonetLocalHandleRequest", "failed to read chipid");
+					
+					// loc_46fa5:
+				    LODWORD(rbx) = 0x0;
+				    var_128 = 0x1;
+					
+					// loc_46fb1:
+				    var_96 = rbx;
+				    var_112 = 0x0;
+				    var_104 = 0x0;
+				    var_120 = 0x0;
+				    var_80 = rbx;
+				    r15 = rbx;
+				    var_88 = rbx;
+				    // loc_4705b;
+				}
+			    // loc_46d75;
+			    rbx = CFDictionaryGetValue(r12, *_kAMAuthInstallTagBbCertId);
+			    if ((rbx != 0x0) && (CFNumberGetTypeID() == CFGetTypeID(rbx))) {
+					// loc_46dac;
+				    var_88 = *_kAMAuthInstallTagBbFirmware;
+				    r14 = CFDictionaryGetValue(r12, *_kAMAuthInstallTagBbFirmware);
+				    if ((r14 != 0x0) && (CFDictionaryGetTypeID() == CFGetTypeID(r14))) {
+						// loc_46dea;
+					    var_120 = r12;
+					    rbx = CFDictionaryGetValue(r14, *_kAMAuthInstallTagBbEnandprogPartialDigest);
+					    if ((rbx != 0x0) && (CFDataGetTypeID() != CFGetTypeID(rbx))) goto loc_46fa5;
+					    var_96 = rbx;
+					    r12 = r15;
+					    r15 = CFDictionaryGetValue(r14, *_kAMAuthInstallTagBbDblPartialDigests);
+					    if ((r15 != 0x0) && (CFDataGetTypeID() != CFGetTypeID(r15))) goto loc_46fa5;
+					    rbx = CFDictionaryGetValue(r14, *_kAMAuthInstallTagBbEDblPartialDigest);
+					    if ((rbx != 0x0) && (CFDataGetTypeID() != CFGetTypeID(rbx))) goto loc_46fa5;
+					    var_104 = rbx;
+					    var_112 = CFDictionaryGetValue(r14, *_kAMAuthInstallTagBbRestoreDblPartialDigest);
+					    if ((r15 != 0x0) && (CFDataGetTypeID() != CFGetTypeID(r15))) goto loc_46fa5;
+					    r13 = CFDictionaryGetValue(r14, *_kAMAuthInstallTagBbSbl1PartialDigest);
+					    if ((r13 != 0x0) && (CFDataGetTypeID() != CFGetTypeID(r13))) goto loc_46fa5;
+					    r14 = CFDictionaryGetValue(r14, *_kAMAuthInstallTagBbRestoreSbl1PartialDigest);
+					    if ((r14 != 0x0) && (CFDataGetTypeID() != CFGetTypeID(r14))) goto loc_46fa5;
+					    LODWORD(rcx) = var_212;
+					    rax = var_96;
+					    rbx = var_88;
+					    // loc_46f54;
+					    if (LODWORD(rcx) != 0x4600e1) {
+							// loc_471d6;
+						}
+					    // loc_4718b;
+					    if (LODWORD(rcx) > 0x5000e0) {
+							// loc_4717b;
+							
+						    // loc_47183;
+						    if (LODWORD(rcx) != 0x5000e1) {
+								// loc_471d6;
+							}
+							// loc_4718b:
+						    rax = rax | r15;
+						    if (CPU_FLAGS & NE) {
+								// loc_47209;
+							}
+						    // loc_478a8;
+						    if (LODWORD(rcx) > 0x5a00e0) {
+								// loc_471a3;
+								
+							    if ((LODWORD(rcx) != 0x6f10e1) && (LODWORD(rcx) != 0x6f20e1)) {
+									// loc_471d6;
+								    _AMAuthInstallLog(0x3, "AMAuthInstallMonetLocalHandleRequest", "unrecognized chipid: 0x%08X");
+									
+									// loc_47086:
+								    LODWORD(rbx) = 0x0;
+								    var_128 = 0x1;
+								    var_96 = 0x0;
+								    var_112 = 0x0;
+								    var_104 = 0x0;
+								    var_120 = 0x0;
+								    var_80 = 0x0;
+								    LODWORD(r15) = 0x0;
+								    var_88 = 0x0;
+								    LODWORD(r14) = 0x0;
+								    LODWORD(r13) = 0x0;
+								    LODWORD(r12) = 0x0;
+								    // loc_470e2;
+								}
+							    // loc_471bb;
+							    rax = r13 | r14;
+							    if (CPU_FLAGS & NE) {
+									// loc_47209;
+								}
+							    // loc_478a8;
+							    if (LODWORD(rcx) == 0x5a00e1) {
+									// loc_471f5;
+								    rax = var_104 | var_112;
+								    if (CPU_FLAGS & E) {
+										// loc_4789a;
+									    _AMAuthInstallLog(0x3);
+									    LODWORD(rbx) = 0x0;
+									    var_128 = 0x8;
+									    goto loc_46fb1;
+									}
+								    // loc_47209;
+								    var_8 = r14;
+								    rax = CFPropertyListCreateDeepCopy(CFGetAllocator(r12), var_120, 0x2);
+								    if (rax == 0x0) {
+										// loc_477ea;
+									    LODWORD(rbx) = 0x0;
+									    var_96 = rbx;
+									    var_112 = 0x0;
+									    var_104 = 0x0;
+									    var_120 = 0x0;
+									    var_80 = rbx;
+									    r15 = rbx;
+									    var_88 = rbx;
+									    LODWORD(r14) = 0x0;
+									    r13 = rbx;
+									    r12 = rax;
+									    var_128 = 0x2;
+									    goto loc_470e2;
+									}
+								    // loc_47235;
+								    var_0 = r13;
+								    var_64 = rax;
+								    var_128 = CFDictionaryGetValue(rax, rbx);
+								    rax = CFGetAllocator(r12);
+								    r14 = rbx;
+								    rax = CFDictionaryCreateMutable(rax, 0x0, *kCFTypeDictionaryKeyCallBacks, *kCFTypeDictionaryValueCallBacks);
+								    if (rax == 0x0) {
+										// loc_47840;
+									    var_96 = 0x0;
+									    var_112 = 0x0;
+									    var_104 = 0x0;
+									    var_120 = 0x0;
+									    var_80 = 0x0;
+									    r15 = 0x0;
+									    var_88 = 0x0;
+									    LODWORD(rbx) = 0x0;
+									    LODWORD(r14) = 0x0;
+									    r13 = rbx;
+									    r12 = var_64;
+									    var_128 = 0x2;
+									    // loc_470e2;
+									}
+								    // loc_47283;
+								    r13 = r12;
+								    var_72 = rax;
+								    CFDictionarySetValue(var_32, r14, rax);
+								    r12 = 0x0;
+								    LODWORD(rbx) = 0x0;
+								    rbx = r13;
+								    rax = __AMAuthInstallMonetLocalCreateStitchData(rbx, 0x1, r15, &var_200);
+								    if (LODWORD(rax) != 0x0) {
+										// loc_478c5;
+									    LODWORD(rbx) = 0x0;
+									    r15 = var_200;
+									    var_96 = rbx;
+									    var_112 = 0x0;
+									    var_104 = 0x0;
+									    var_120 = 0x0;
+									    var_80 = rbx;
+									    var_88 = rbx;
+									    LODWORD(r14) = 0x0;
+									    r13 = rbx;
+									    r12 = var_64;
+									    var_128 = LODWORD(rax);
+									    // loc_470e2;
+									}
+								    // loc_472d4;
+								    r12 = var_200;
+								    CFDictionarySetValue(var_72, *_kAMAuthInstallTagBbDblStitch, r12);
+								    var_16 = rbx;
+								    r13 = CFDataCreateMutable(CFGetAllocator(rbx), 0x14);
+								    if (r13 != 0x0) {
+										CFDataSetLength(r13, 0x14);
+										rbx = CFDataGetBytePtr(r15);
+										CC_SHA1_Init(&var_216);
+										asm{ bswap      eax };
+										var_216 = LODWORD(*(int32_t *)(rbx + 0x20));
+										asm{ bswap      eax };
+										var_220 = LODWORD(*(int32_t *)(rbx + 0x24));
+										asm{ bswap      eax };
+										var_224 = LODWORD(*(int32_t *)(rbx + 0x28));
+										asm{ bswap      eax };
+										var_228 = LODWORD(*(int32_t *)(rbx + 0x2c));
+										asm{ bswap      eax };
+										var_232 = LODWORD(*(int32_t *)(rbx + 0x30));
+										var_236 = LODWORD(LODWORD(*(int32_t *)(rbx + 0x1c)) << 0x3);
+										r12 = r12;
+										var_240 = 0x0;
+										CC_SHA1_Update(&var_216, CFDataGetBytePtr(r12), LODWORD(CFDataGetLength(r12)));
+										CC_SHA1_Final(CFDataGetMutableBytePtr(r13), &var_216);
+										rbx = CFRetain(r13);
+										LODWORD(r15) = 0x0;
+								    }
+								    else {
+										LODWORD(r15) = 0x2;
+										LODWORD(rbx) = 0x0;
+										LODWORD(r13) = 0x0;
+								    }
+								    _SafeRelease(r13);
+								    CFDictionarySetValue(var_128, *_kAMAuthInstallTagBbDblDownloadDigest, rbx);
+								    rcx = CFDataGetLength(r12);
+								    _AMAuthInstallLog(0x7, "AMAuthInstallMonetLocalHandleRequest", "dblStitchData size=0x%x", rcx);
+								    r13 = var_16;
+								    if (LODWORD(r15) != 0x0) {
+										// loc_47933;
+									    var_96 = 0x0;
+									    var_112 = 0x0;
+									    var_104 = 0x0;
+									    var_120 = 0x0;
+									    r13 = rbx;
+									    var_80 = 0x0;
+									    var_88 = 0x0;
+									    var_128 = LODWORD(r15);
+									    r15 = r12;
+									    LODWORD(rbx) = 0x0;
+									    r14 = rbx;
+									    r12 = var_64;
+									    // loc_470e2;
+									}
+								    if (r15 == 0x0) {
+										// loc_47421;
+									    var_56 = rbx;
+									    LODWORD(rbx) = 0x0;
+									    rbx = r13;
+									    rax = __AMAuthInstallMonetLocalCreateStitchData(rbx, 0x2);
+									    if (LODWORD(rax) != 0x0) {
+											// loc_4798c;
+										    LODWORD(rbx) = 0x0;
+										    var_80 = var_184;
+										    var_96 = rbx;
+										    var_112 = 0x0;
+										    var_104 = 0x0;
+										    var_120 = 0x0;
+										    var_88 = rbx;
+										    var_128 = LODWORD(rax);
+										    r15 = r12;
+										    LODWORD(r14) = 0x0;
+										    r12 = var_64;
+										    r13 = var_56;
+										    // loc_470e2;
+										}
+									    // loc_47458;
+									    r13 = rbx;
+									    rbx = var_184;
+									    CFDictionarySetValue(var_72, *_kAMAuthInstallTagBbENandprogStitch, rbx);
+									    rcx = CFDataGetLength(rbx);
+									    _AMAuthInstallLog(0x7, "AMAuthInstallMonetLocalHandleRequest", "nandprogStitchData size=0x%x", rcx);
+									    if (var_96 == 0x0) {
+											// loc_474a0;
+										    var_48 = r12;
+										    var_80 = rbx;
+										    LODWORD(rbx) = 0x0;
+										    r15 = var_104;
+										    LODWORD(r12) = 0x0;
+										    var_88 = 0x0;
+										    rbx = r13;
+										    rax = __AMAuthInstallMonetLocalCreateStitchData(rbx, 0x2, r15, &var_176);
+										    if (LODWORD(rax) != 0x0) {
+												// loc_479f1;
+											    LODWORD(rbx) = 0x0;
+											    var_96 = var_176;
+											    var_112 = 0x0;
+											    var_104 = 0x0;
+											    var_120 = 0x0;
+											    var_88 = rbx;
+											    LODWORD(r14) = 0x0;
+											    goto loc_47a86;
+											}
+										    // loc_474f4;
+										    r12 = var_176;
+										    CFDictionarySetValue(var_72, *_kAMAuthInstallTagBbEDblStitch, r12);
+										    rcx = CFDataGetLength(r12);
+										    _AMAuthInstallLog(0x7, "AMAuthInstallMonetLocalHandleRequest", "eDblStitchData size=0x%x", rcx);
+										    r13 = rbx;
+										    var_88 = var_168;
+										    CFDictionarySetValue(var_128, *_kAMAuthInstallTagBbEDblDownloadDigest, var_168);
+										    LODWORD(rax) = LODWORD(__AMAuthInstallMonetLocalCreateEDBLDownloadDigestData(rbx, r15, r12, &var_168));
+										    if ((LODWORD(__AMAuthInstallMonetLocalCreateEDBLDownloadDigestData(rbx, r15, r12, &var_168)) & LODWORD(__AMAuthInstallMonetLocalCreateEDBLDownloadDigestData(rbx, r15, r12, &var_168))) != 0x0) {
+												// loc_47a2e;
+											    LODWORD(rbx) = 0x0;
+											    var_112 = 0x0;
+											    var_104 = 0x0;
+											    var_120 = 0x0;
+											    LODWORD(r14) = 0x0;
+											    goto loc_47a7f;
+											}
+										    // loc_47581;
+										    LODWORD(rbx) = 0x0;
+										    if (r15 == 0x0) {
+												// loc_47583;
+											    r15 = r13;
+											    rax = __AMAuthInstallMonetLocalCreateStitchData(r15, 0x1, rbx, &var_152);
+											    if (LODWORD(rax) != 0x0) {
+													// loc_47aad;
+												    LODWORD(r14) = 0x0;
+												    var_104 = var_152;
+												    var_120 = 0x0;
+												    var_112 = 0x0;
+												    // loc_47b17;
+												}
+												// loc_47645:
+											    var_104 = var_152;
+											    CFDictionarySetValue(var_72, *_kAMAuthInstallTagBbSbl1Stitch, var_152);
+											    rdi = r15;
+											    r15 = r15;
+											    r14 = var_192;
+											    CFDictionarySetValue(var_128, *_kAMAuthInstallTagBbSbl1DownloadDigest, var_192);
+											    rcx = CFDataGetLength(var_152);
+											    _AMAuthInstallLog(0x7, "AMAuthInstallMonetLocalHandleRequest", "sbl1StitchData size=0x%x", rcx);
+											    LODWORD(rax) = LODWORD(__AMAuthInstallMonetLocalCreateEDBLDownloadDigestData(rdi, rbx, var_152, &var_192));
+											    if ((LODWORD(__AMAuthInstallMonetLocalCreateEDBLDownloadDigestData(rdi, rbx, var_152, &var_192)) & LODWORD(__AMAuthInstallMonetLocalCreateEDBLDownloadDigestData(rdi, rbx, var_152, &var_192))) != 0x0) {
+													// loc_47ad6;
+												    var_112 = 0x0;
+												    var_120 = 0x0;
+												    // loc_47b17;
+												}
+											    // loc_476de;
+											    rax = __AMAuthInstallMonetLocalCreateStitchData(r15, 0x2);
+											    if (LODWORD(rax) != 0x0) {
+													// loc_47a56;
+												    rbx = var_160;
+												    var_104 = 0x0;
+												    var_120 = 0x0;
+												    r14 = 0x0;
+												    var_112 = 0x0;
+													
+													// loc_47a7f:
+												    var_96 = r12;
+													
+													// loc_47a86:
+												    r15 = var_48;
+												    r12 = var_64;
+												    var_128 = LODWORD(rax);
+												    r13 = var_56;
+												    // loc_470e2;
+												}
+											    // loc_475ae;
+											    rbx = var_160;
+											    CFDictionarySetValue(var_72, *_kAMAuthInstallTagBbRestoreDblStitch, rbx);
+											    rcx = CFDataGetLength(rbx);
+											    _AMAuthInstallLog(0x7, "AMAuthInstallMonetLocalHandleRequest", "restoreDblStitchData size=0x%x", rcx);
+											    if (var_112 == 0x0) {
+													// loc_475f3;
+												    var_40 = rbx;
+												    var_96 = r12;
+												    LODWORD(r12) = 0x0;
+												    rbx = var_0;
+												    var_104 = 0x0;
+												    LODWORD(r14) = 0x0;
+												    if (rbx == 0x0) {
+														// loc_476de;
+													    rcx = CFDataGetLength(r12);
+													    _AMAuthInstallLog(0x7, "AMAuthInstallMonetLocalHandleRequest", "restoreSbl1StitchData size=0x%x", rcx);
+													    CFDictionarySetValue(var_72, *_kAMAuthInstallTagBbRestoreSbl1Stitch, r12);
+													    if (var_8 == 0x0) {
+															// loc_4774b;
+														    var_112 = r12;
+														    rax = CFDictionaryContainsKey(var_120, @"@BBTicket");
+														    LODWORD(rbx) = 0x0;
+														    if (LOBYTE(rax) == 0x0) {
+																// loc_477a9;
+															    var_120 = rbx;
+															    *var_24 = CFRetain(var_32);
+															    var_128 = 0x0;
+															    r15 = var_48;
+															    r12 = var_64;
+																
+																// loc_47b32:
+															    r13 = var_56;
+															    rbx = var_40;
+															    // loc_470e2;
+															}
+														    // loc_4776b;
+														    rax = _AMAuthInstallMonetLocalCreateRootTicket(r15, var_64, &var_136);
+														    if (LODWORD(rax) != 0x0) {
+																// loc_47b09;
+															    var_120 = var_136;
+																
+																// loc_47b17:
+															    r15 = var_48;
+																
+																// loc_47b1e:
+															    r12 = var_64;
+															    var_128 = LODWORD(rax);
+															    // loc_47b32;
+															    r13 = var_56;
+															    rbx = var_40;
+															    // loc_470e2;
+															}
+															// loc_47789:
+														    rbx = var_136;
+														    CFDictionarySetValue(var_32, *_kAMAuthInstallTagBbTicket, rbx);
+														    // loc_477a9;
+														}
+													    // loc_476ea;
+													    rax = __AMAuthInstallMonetLocalCreateStitchData(r15, 0x1);
+													    r12 = var_144;
+													    if (LODWORD(rax) != 0x0) {
+															// loc_47aee;
+														    var_120 = 0x0;
+														    r15 = var_48;
+														    var_112 = r12;
+														    // loc_47b1e;
+														    r12 = var_64;
+														    var_128 = LODWORD(rax);
+														    // loc_47b32;
+														    r13 = var_56;
+														    rbx = var_40;
+														    // loc_470e2;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						    
+						}
+					}
+				    //goto loc_4706c;
+				    _AMAuthInstallLog(0x3);
+				    // loc_47086;
+				}
+			    // loc_4707a;
+			}
+		}
+	    // loc_4707a;
+    }
+	
+	//loc_46ffc:
+    _AMAuthInstallLog(0x3, "AMAuthInstallMonetLocalHandleRequest", "Failed to allocate responseDict");
+    var_128 = 0x2;
+    var_96 = 0x0;
+    var_112 = 0x0;
+    var_104 = 0x0;
+    var_120 = 0x0;
+    var_80 = 0x0;
+    r15 = 0x0;
+    var_88 = 0x0;
+    LODWORD(rbx) = 0x0;
+	
+	// loc_4705b:
+    LODWORD(r14) = 0x0;
+    r13 = rbx;
+    LODWORD(r12) = 0x0;
+	
+	// loc_470e2:
+    _SafeRelease();
+    _SafeRelease(r15);
+    _SafeRelease(r13);
+    _SafeRelease(var_80);
+    _SafeRelease(var_120);
+    _SafeRelease(r12);
+    _SafeRelease(var_32);
+    _SafeRelease(var_104);
+    _SafeRelease(r14);
+    _SafeRelease(var_112);
+    _SafeRelease(var_96);
+    _SafeRelease(rbx);
+    _SafeRelease(var_88);
+    LODWORD(rax) = var_128;
+    return rax;
+}
+
 
 #endif
 
