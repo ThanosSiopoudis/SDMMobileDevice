@@ -86,25 +86,6 @@ uint32_t AMAuthInstallCryptoRegisterKeys(AMAuthInstallClassRef install) {
 	return result;
 }
 
-uint32_t AMAuthInstallMonetLocalRegisterKeys(AMAuthInstallClassRef install) {
-	CFDictionaryRef keys = install->ivars.keys;
-	Boolean contains_key = CFDictionaryContainsKey(keys, CFSTR("bb.monet.rom.dbl.public"));
-    if (!contains_key) {
-		AMAuthInstallCryptoRegisterKeysFromPEMBuffer(keys, CFSTR("bb.monet.rom.dbl"), _kMonetAttestationDblCertPrivateKey, 0x68c);
-		AMAuthInstallCryptoRegisterKeysFromPEMBuffer(keys, CFSTR("bb.monet.rom.enandprog"), _kMonetAttestationENandprogCertPrivateKey, 0x68c);
-		AMAuthInstallCryptoRegisterKeysFromPEMBuffer(keys, CFSTR("bb.monet.ticket.activation"), _kMonetTicketActivationPrivateKey, 0x37c);
-		AMAuthInstallCryptoRegisterKeysFromPEMBuffer(keys, CFSTR("bb.monet.ticket.calibration"), _kMonetTicketCalibrationPrivateKey, 0x378);
-		AMAuthInstallCryptoRegisterKeysFromPEMBuffer(keys, CFSTR("bb.monet.ticket.provisioning"), _kMonetTicketProvisioningPrivateKey, 0x378);
-		AMAuthInstallCryptoRegisterKeysFromPEMBuffer(keys, CFSTR("bb.monet.ticket.root"), _kMonetTicketRootPrivateKey, 0x378);
-		AMAuthInstallCryptoRegisterCertFromPEMBuffer(keys, CFSTR("bb.monet.rom.general.root"), _kMonetRootCACert, 0x4da);
-		AMAuthInstallCryptoRegisterCertFromPEMBuffer(keys, CFSTR("bb.monet.rom.general.attestationca"), _kMonetAttestationCACert, 0x4e6);
-		AMAuthInstallCryptoRegisterCertFromPEMBuffer(keys, CFSTR("bb.monet.rom.dbl.attestation"), _kMonetAttestationDblCert, 0x523);
-		AMAuthInstallCryptoRegisterCertFromPEMBuffer(keys, CFSTR("bb.monet.rom.enandprog.attestation"), _kMonetAttestationENandprogCert, 0x527);
-		AMAuthInstallLog(0x6, "AMAuthInstallMonetLocalRegisterKeys", "monet local signing keys available");
-    }
-    return 0x0;
-}
-
 uint32_t AMAuthInstallCryptoRegisterKeysFromPEMBuffer(CFDictionaryRef dict, CFStringRef key, CFTypeRef value, void* context) {
     LODWORD(r14) = LODWORD(rcx);
     r12 = rdx;
