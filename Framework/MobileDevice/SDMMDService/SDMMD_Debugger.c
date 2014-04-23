@@ -359,8 +359,9 @@ sdmmd_return_t SDMMD_mount_image(SDMMD_AMConnectionRef connection, CFStringRef i
 		CheckErrorAndReturn(result);
 		
 		if (response) {
+			CFShow(response);
 			result = SDMMD__ErrorHandler(SDMMD_ImageMounterErrorConvert, response);
-					
+			printf("%08x %s",result, SDMMD_AMDErrorString(result));
 			CheckErrorAndReturn(result);
 					
 			CFTypeRef status = CFDictionaryGetValue(response, CFSTR("Status"));
